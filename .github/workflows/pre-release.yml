@@ -15,6 +15,7 @@ jobs:
       - name: "Update Pre Release"
         run: |
           echo "done!"
+          echo "Tags: $TAGS"
 
       - name: Parse tag
         id: vars
