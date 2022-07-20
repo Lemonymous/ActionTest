@@ -12,23 +12,35 @@ jobs:
 
     steps:
       # ...
-      - name: "Update Pre Release"
-        run: |
-          echo "done!"
+      steps:
+      - uses: actions/checkout@v1
 
-      - uses: EasyDesk/action-semver-release@v1.0.0
-        with:
-          prefix: Semantic Version Release Action
-          version: v1.0.0
-          prerelease: true
-          automatic_release_tag: true
-          #files: |
+      # you'll need to add an `id` in order to access output variables
+      - uses: codfish/semantic-release-action@v1
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - uses: "MC-Machinations/auto-release-changelog@v1.1.3"
+      - run: echo ${{ steps.semantic.outputs.release-version }}
+
+      - run: echo "$OUTPUTS"
+        env:
+          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
+
+      - uses: codfish/some-other-action@v1
         with:
-          token: "${{ secrets.PRE_RELEASE_TOKEN }}"
-          draft: false
-          pre-release: true
-          title: "Development Build"
-          # files: |
-          skip-prereleases: true
+          release-version: ${{ steps.semantic.outputs.release-version }}
+
+      # - name: "Update Pre Release"
+        # run: |
+          # echo "done!"
+
+      # - uses: "MC-Machinations/auto-release-changelog@v1.1.3"
+        # with:
+          # token: "${{ secrets.PRE_RELEASE_TOKEN }}"
+          # draft: false
+          # pre-release: true
+          # title: "Development Build"
+          files: |
+          # skip-prereleases: true
