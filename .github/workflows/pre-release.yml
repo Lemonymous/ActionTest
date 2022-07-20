@@ -16,17 +16,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Build Changelog
+      - name: "Build Changelog"
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
+          configuration: "configuration_complex.json"
           fromTag: "v0.1.0"
           toTag: "v0.2.0"
           commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
 
-      - name: Echo
+      - name: "Echo"
         run: |
           echo ${{steps.github_release.outputs.changelog}}
 
