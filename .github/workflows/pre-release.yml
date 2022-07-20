@@ -2,8 +2,6 @@ name: "pre-release"
 
 on:
   workflow_dispatch:
-    tags:
-      - "v*"
 
 jobs:
   pre-release:
@@ -11,28 +9,13 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      # ...
-      steps:
-      - name: "checkout"
-      - uses: actions/checkout@v1
-
-      # you'll need to add an `id` in order to access output variables
-      - name: "semantic release"
-      - uses: codfish/semantic-release-action@v1
-        id: semantic
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
 
-      - name: "echo version"
-      - run: echo ${{ steps.semantic.outputs.release-version }}
-
-      - name: "echo outputs"
-      - run: echo "$OUTPUTS"
-        env:
-          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
-
-      - name: "output release version"
-      - uses: codfish/some-other-action@v1
+      - name: Create Release
+        uses: softprops/action-gh-release@v0.1.14
         with:
-          release-version: ${{ steps.semantic.outputs.release-version }}
+          body: ${{steps.github_release.outputs.changelog}}
