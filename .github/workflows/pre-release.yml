@@ -19,6 +19,7 @@ jobs:
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
+        commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
 
