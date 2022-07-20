@@ -42,5 +42,5 @@ jobs:
           # draft: false
           # pre-release: true
           # title: "Development Build"
-          files: |
+          #files: |
           # skip-prereleases: true
