@@ -10,9 +10,13 @@ jobs:
 
     steps:
       # ...
-      - name: "Build & test"
+      - name: "Update Pre Release"
         run: |
           echo "done!"
+
+      - name: Parse tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - uses: "MC-Machinations/auto-release-changelog@v1.1.3"
         with:
