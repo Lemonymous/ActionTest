@@ -20,6 +20,8 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
+          fromTag: "v0.1.0"
+          toTag: "v0.2.0"
           commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
