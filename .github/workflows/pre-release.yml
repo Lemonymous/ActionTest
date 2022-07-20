@@ -2,6 +2,11 @@ name: "pre-release"
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: Version of the new mod loader pre-release
+        required: true
+        default: "#.#.#"
 
 jobs:
   pre-release:
