@@ -5,10 +5,15 @@ on:
     tags:
       - '*'
 
+env:
+  DAY_OF_WEEK: Monday
+
 jobs:
   pre-release:
     name: "Pre Release"
     runs-on: "ubuntu-latest"
+    env:
+      Greeting: Hello
 
     steps:
       - name: "Checkout"
@@ -29,7 +34,10 @@ jobs:
 
       - name: "Echo"
         run: |
-          echo $steps.github_release.outputs.changelog
+          echo "$steps.github_release.outputs.changelog"
+          echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        env:
+          First_Name: Mona
 
       # - name: Create Release
         # uses: softprops/action-gh-release@v0.1.14
