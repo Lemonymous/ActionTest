@@ -5,15 +5,10 @@ on:
     tags:
       - '*'
 
-env:
-  DAY_OF_WEEK: Monday
-
 jobs:
   pre-release:
     name: "Pre Release"
     runs-on: "ubuntu-latest"
-    env:
-      Greeting: Hello
 
     steps:
       - name: "Checkout"
@@ -25,20 +20,16 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
-          configuration: "configuration_complex.json"
           fromTag: "v0.1.0"
-          # toTag: "v0.2.0"
           commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
 
       - name: "Echo"
         run: |
-          echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
           echo "$changelog"
         env:
           changelog: ${{ steps.github_release.outputs.changelog }}
-          First_Name: Mona
 
       # - name: Create Release
         # uses: softprops/action-gh-release@v0.1.14
