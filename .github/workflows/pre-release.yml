@@ -34,9 +34,10 @@ jobs:
 
       - name: "Echo"
         run: |
-          echo "$steps.github_release.outputs.changelog"
+          echo "$changelog"
           echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
         env:
+          changelog: ${{ steps.github_release.outputs.changelog }}
           First_Name: Mona
 
       # - name: Create Release
