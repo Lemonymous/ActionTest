@@ -27,15 +27,15 @@ jobs:
         with:
           configuration: "configuration_complex.json"
           fromTag: "v0.1.0"
-          toTag: "v0.2.0"
+          # toTag: "v0.2.0"
           commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.PRE_RELEASE_TOKEN }}
 
       - name: "Echo"
         run: |
-          echo "$changelog"
           echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+          echo "$changelog"
         env:
           changelog: ${{ steps.github_release.outputs.changelog }}
           First_Name: Mona
